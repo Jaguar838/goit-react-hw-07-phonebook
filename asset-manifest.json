@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/goit-react-hw-04-hooks-phonebook/static/css/main.429a9c8d.chunk.css",
-    "main.js": "/goit-react-hw-04-hooks-phonebook/static/js/main.abba3df3.chunk.js",
-    "main.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/main.abba3df3.chunk.js.map",
-    "runtime-main.js": "/goit-react-hw-04-hooks-phonebook/static/js/runtime-main.ab2eda13.js",
-    "runtime-main.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/runtime-main.ab2eda13.js.map",
-    "static/js/2.55bfedbb.chunk.js": "/goit-react-hw-04-hooks-phonebook/static/js/2.55bfedbb.chunk.js",
-    "static/js/2.55bfedbb.chunk.js.map": "/goit-react-hw-04-hooks-phonebook/static/js/2.55bfedbb.chunk.js.map",
-    "index.html": "/goit-react-hw-04-hooks-phonebook/index.html",
-    "precache-manifest.1475ab6a6c404b18ab1b9ac6bb943e81.js": "/goit-react-hw-04-hooks-phonebook/precache-manifest.1475ab6a6c404b18ab1b9ac6bb943e81.js",
-    "service-worker.js": "/goit-react-hw-04-hooks-phonebook/service-worker.js",
-    "static/css/main.429a9c8d.chunk.css.map": "/goit-react-hw-04-hooks-phonebook/static/css/main.429a9c8d.chunk.css.map",
-    "static/js/2.55bfedbb.chunk.js.LICENSE.txt": "/goit-react-hw-04-hooks-phonebook/static/js/2.55bfedbb.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/goit-react-hw-04-hooks-phonebook/static/media/montserrat-v15-latin_cyrillic-regular.b3e1c2f0.woff"
+    "main.css": "/goit-react-hw-07-phonebook/static/css/main.864c815e.chunk.css",
+    "main.js": "/goit-react-hw-07-phonebook/static/js/main.4c609b75.chunk.js",
+    "main.js.map": "/goit-react-hw-07-phonebook/static/js/main.4c609b75.chunk.js.map",
+    "runtime-main.js": "/goit-react-hw-07-phonebook/static/js/runtime-main.e14b549b.js",
+    "runtime-main.js.map": "/goit-react-hw-07-phonebook/static/js/runtime-main.e14b549b.js.map",
+    "static/js/2.fee98a8f.chunk.js": "/goit-react-hw-07-phonebook/static/js/2.fee98a8f.chunk.js",
+    "static/js/2.fee98a8f.chunk.js.map": "/goit-react-hw-07-phonebook/static/js/2.fee98a8f.chunk.js.map",
+    "index.html": "/goit-react-hw-07-phonebook/index.html",
+    "precache-manifest.42b050960dfa7d6f99cc7326419c3b47.js": "/goit-react-hw-07-phonebook/precache-manifest.42b050960dfa7d6f99cc7326419c3b47.js",
+    "service-worker.js": "/goit-react-hw-07-phonebook/service-worker.js",
+    "static/css/main.864c815e.chunk.css.map": "/goit-react-hw-07-phonebook/static/css/main.864c815e.chunk.css.map",
+    "static/js/2.fee98a8f.chunk.js.LICENSE.txt": "/goit-react-hw-07-phonebook/static/js/2.fee98a8f.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/goit-react-hw-07-phonebook/static/media/montserrat-v15-latin_cyrillic-regular.b3e1c2f0.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.ab2eda13.js",
-    "static/js/2.55bfedbb.chunk.js",
-    "static/css/main.429a9c8d.chunk.css",
-    "static/js/main.abba3df3.chunk.js"
+    "static/js/runtime-main.e14b549b.js",
+    "static/js/2.fee98a8f.chunk.js",
+    "static/css/main.864c815e.chunk.css",
+    "static/js/main.4c609b75.chunk.js"
   ]
 }
