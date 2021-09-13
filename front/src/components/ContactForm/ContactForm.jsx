@@ -1,94 +1,72 @@
 import React, { useState } from 'react';
-import { Button } from 'UI/Button';
-import css from './ContactForm.module.css';
-import PropTypes from 'prop-types';
+import { Button, Input } from 'UI';
+import toast from 'react-hot-toast';
 
-export function ContactForm({ onAdd, onCheckUnique }) {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+import { useDispatch } from 'react-redux';
+// import { addContact, checkUnique } from 'redux/actions';
 
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
+export function ContactForm() {
+    // const dispatch = useDispatch();
+    const [contact, setContact] = useState({ name: '', phone: '' });
 
-    const handleChangeForm = ({ target }) => {
-        const { name, value } = target;
-
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
-            case 'phone':
-                setPhone(value);
-                break;
-            default:
-                return;
-        }
+    const onCheckUnique = name => {
+        // const isExistContact = !!dispatch(checkUnique(name));
+        // const isExistContact = !!dispatch(checkUnique(name));
+        // isExistContact && toast('Contact is already exist');
+        // return !isExistContact;
     };
-
     function validateForm() {
-        if (!name || !phone) {
-            alert('Some field is empty');
+        if (!contact.name || !contact.phone) {
+            toast('Some field is empty');
             return false;
         }
-        return onCheckUnique(name);
+        // return onCheckUnique(contact.name);
     }
     const onSubmit = data => {
-        // const { name, phone } = data;
+        const newContact = {
+            ...contact,
+            id: Date.now(),
+        };
         const isValidateForm = validateForm();
         if (!isValidateForm) return;
-        onAdd({ id: uuid(), name, phone });
+        // dispatch(addContact(newContact));
         resetForm();
-        console.log('Submit', data, errors);
+        console.log('Submit', newContact);
     };
 
     const resetForm = () => {
-        setName('');
-        setPhone('');
+        setContact({ name: '', phone: '' });
     };
-
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input
-                className={css.input}
+        <form onSubmit={onSubmit}>
+            <Input
+                value={contact.name}
                 type="text"
-                // name="name"
+                onChange={({ target }) =>
+                    setContact({ ...contact, name: target.value })
+                }
                 placeholder="Enter name"
-                {...register('name', {
-                    required: true,
-                    pattern:
-                        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-                })}
-                value={name}
-                required
-                onChange={handleChangeForm}
+                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                title="Имя может состоять только из букв, апострофа, тире и пробелов."
+                // required
             />
-            {errors.name && alert('Name is required.')}
 
-            <input
-                className={css.input}
+            <Input
+                name="name"
+                value={contact.phone}
                 type="tel"
-                // name="phone"
+                onChange={({ target }) =>
+                    setContact({ ...contact, phone: target.value })
+                }
                 placeholder="Enter phone number"
-                {...register('phone', {
-                    required: true,
-                    pattern:
-                        /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-                })}
-                value={phone}
-                required
-                onChange={handleChangeForm}
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Номер телефона может содержать пробелы, тире, круглые скобки и может начинаться с +"
+                // required
             />
-            {errors.phone && alert('Please enter number for phone.')}
 
             <Button type="submit">Add Contact</Button>
         </form>
+        // {errors.name && toast('Name is required.')}
+        // {errors.phone && toast('Please enter number for phone.')}
     );
 }
-
-ContactForm.propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onCheckUnique: PropTypes.func.isRequired,
-};
