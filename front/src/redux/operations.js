@@ -10,7 +10,7 @@ import {
     deleteContactError,
 } from './actions';
 
-import API from '../API/API';
+import * as API from '../API/API';
 
 export const fetchContacts = () => async dispatch => {
     dispatch(fetchContactsRequest());

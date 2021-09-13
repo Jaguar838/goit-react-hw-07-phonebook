@@ -1,21 +1,23 @@
-const getLoading = (state) => state.contacts.loading;
-const getAllContacts = (state) => state.contacts.items;
-const getFilter = (state) => state.contacts.filter;
-const getError = (state) => state.contacts.error;
+import { createSelector } from '@reduxjs/toolkit';
 
-const getVisibleContacts = (state) => {
-  const contacts = getAllContacts(state);
-  const filter = getFilter(state);
-  const normalizedFilter = filter.toLowerCase();
-  return contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(normalizedFilter)
-  );
-};
+const getAllContacts = state => state.contacts.items;
+const getFilter = state => state.contacts.filter;
+const get_isLoading = state => state.contacts.loading;
+const getError = state => state.contacts.error;
+
+const getVisibleContacts = createSelector(
+    [getAllContacts, getFilter],
+    (contacts, filter) =>
+        contacts.filter(({ name }) => name.toLowerCase().includes(filter)),
+);
+
+const get_isPhonebook = state => state.contacts.items.length > 0;
 
 export default {
-  getLoading,
-  getAllContacts,
-  getFilter,
-  getError,
-  getVisibleContacts,
+    get_isPhonebook,
+    get_isLoading,
+    getAllContacts,
+    getFilter,
+    getError,
+    getVisibleContacts,
 };
