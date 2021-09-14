@@ -8,11 +8,14 @@ import {
     deleteContactRequest,
     deleteContactSuccess,
     deleteContactError,
+    // changeFilter,
+    // clearError,
 } from './actions';
 
 import * as API from '../API/API';
+// import { createAction } from '@reduxjs/toolkit';
 
-export const fetchContacts = () => async dispatch => {
+const fetchContacts = () => async dispatch => {
     dispatch(fetchContactsRequest());
     try {
         const { data } = await API.getContacts();
@@ -22,9 +25,7 @@ export const fetchContacts = () => async dispatch => {
     }
 };
 
-export const addContact = (name, number) => async dispatch => {
-    const contact = { name, number };
-
+const addContact = contact => async dispatch => {
     console.log(contact);
 
     dispatch(addContactRequest());
@@ -36,7 +37,7 @@ export const addContact = (name, number) => async dispatch => {
     }
 };
 
-export const deleteContact = id => async dispatch => {
+const deleteContact = id => async dispatch => {
     dispatch(deleteContactRequest());
     try {
         await API.deleteContact(id);
@@ -44,4 +45,12 @@ export const deleteContact = id => async dispatch => {
     } catch (error) {
         dispatch(deleteContactError(error));
     }
+};
+
+// const changeFilter = createAction('contacts/changeFilter');
+
+export default {
+    fetchContacts,
+    addContact,
+    deleteContact,
 };

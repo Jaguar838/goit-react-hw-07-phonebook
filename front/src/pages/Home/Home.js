@@ -19,7 +19,7 @@ export const Home = () => {
             </SectionWrap>
 
             <SectionWrap title="Contact List">
-                {isPhonebook ? (
+                {!isPhonebook ? (
                     <>
                         <Filter />
                         <ContactList />

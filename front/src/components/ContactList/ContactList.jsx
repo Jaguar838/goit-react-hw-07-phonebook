@@ -1,5 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+
+import contactsOperations from 'redux/operations';
+import contactsSelectors from 'redux/selectors';
 import { Button } from 'UI/Button';
 
 import css from './ContactList.module.css';
@@ -17,11 +20,19 @@ const ContactListItem = ({ name, phone, onRemove }) => {
     );
 };
 
-export const ContactList = ({ contacts, onRemove }) => {
-    console.log(contacts);
+export const ContactList = () => {
+    const VisibleContacts = useSelector(contactsSelectors.getVisibleContacts);
+    const isLoading = useSelector(contactsSelectors.get_isLoading);
+    const dispatch = useDispatch();
+
+    const onRemove = id => {
+        if (isLoading) return;
+
+        dispatch(contactsOperations.deleteContact(id));
+    };
     return (
         <ul className={css.contacts}>
-            {contacts?.map(({ id, name, phone }) => (
+            {VisibleContacts?.map(({ id, name, phone }) => (
                 <ContactListItem
                     key={id}
                     name={name}
@@ -31,17 +42,6 @@ export const ContactList = ({ contacts, onRemove }) => {
             ))}
         </ul>
     );
-};
-
-ContactList.propTypes = {
-    contacts: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.node.isRequired,
-            name: PropTypes.string.isRequired,
-            phone: PropTypes.string.isRequired,
-        }),
-    ).isRequired,
-    onRemove: PropTypes.func.isRequired,
 };
 
 export default ContactList;

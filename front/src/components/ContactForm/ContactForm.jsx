@@ -2,34 +2,52 @@ import React, { useState } from 'react';
 import { Button, Input } from 'UI';
 import toast from 'react-hot-toast';
 
-import { useDispatch } from 'react-redux';
-// import { addContact, checkUnique } from 'redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import contactsOperations from 'redux/operations';
+import contactsSelectors from 'redux/selectors';
+import { Toaster } from 'react-hot-toast';
 
 export function ContactForm() {
-    // const dispatch = useDispatch();
     const [contact, setContact] = useState({ name: '', phone: '' });
 
+    const contacts = useSelector(contactsSelectors.getAllContacts);
+    const dispatch = useDispatch();
+
+    const pattern = {
+        name: "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$",
+        phone: '^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$',
+    };
+    const title = {
+        name: 'Имя может состоять только из букв, апострофа, тире и пробелов.',
+        phone: 'Номер телефона может содержать пробелы, тире, круглые скобки и может начинаться с +',
+    };
+
     const onCheckUnique = name => {
-        // const isExistContact = !!dispatch(checkUnique(name));
-        // const isExistContact = !!dispatch(checkUnique(name));
-        // isExistContact && toast('Contact is already exist');
-        // return !isExistContact;
+        console.log(name);
+        if (
+            contacts.some(
+                contact => contact.name.toLowerCase() === name.toLowerCase(),
+            )
+        ) {
+            return toast.error(`"${name}" is already in contacts!`);
+        }
     };
     function validateForm() {
-        if (!contact.name || !contact.phone) {
-            toast('Some field is empty');
+        if (contact.name || contact.phone) {
+            toast.error('Some field is empty');
             return false;
         }
-        // return onCheckUnique(contact.name);
+        return onCheckUnique(contact.name);
     }
-    const onSubmit = data => {
+    const handleSubmit = evt => {
+        evt.preventDefault();
         const newContact = {
             ...contact,
             id: Date.now(),
         };
         const isValidateForm = validateForm();
         if (!isValidateForm) return;
-        // dispatch(addContact(newContact));
+        dispatch(contactsOperations.addContact(newContact));
         resetForm();
         console.log('Submit', newContact);
     };
@@ -38,35 +56,37 @@ export function ContactForm() {
         setContact({ name: '', phone: '' });
     };
     return (
-        <form onSubmit={onSubmit}>
-            <Input
-                value={contact.name}
-                type="text"
-                onChange={({ target }) =>
-                    setContact({ ...contact, name: target.value })
-                }
-                placeholder="Enter name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Имя может состоять только из букв, апострофа, тире и пробелов."
-                // required
-            />
+        <>
+            <Toaster position="top-center" reverseOrder={false} />
+            <form onSubmit={handleSubmit}>
+                <Input
+                    value={contact.name}
+                    name="name"
+                    type="text"
+                    onChange={({ target }) =>
+                        setContact({ ...contact, name: target.value })
+                    }
+                    placeholder="Enter name"
+                    pattern={pattern.name}
+                    title={title.name}
+                    required
+                />
 
-            <Input
-                name="name"
-                value={contact.phone}
-                type="tel"
-                onChange={({ target }) =>
-                    setContact({ ...contact, phone: target.value })
-                }
-                placeholder="Enter phone number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Номер телефона может содержать пробелы, тире, круглые скобки и может начинаться с +"
-                // required
-            />
+                <Input
+                    value={contact.phone}
+                    name="phone"
+                    type="tel"
+                    onChange={({ target }) =>
+                        setContact({ ...contact, phone: target.value })
+                    }
+                    placeholder="Enter phone number"
+                    pattern={pattern.phone}
+                    title={title.phone}
+                    required
+                />
 
-            <Button type="submit">Add Contact</Button>
-        </form>
-        // {errors.name && toast('Name is required.')}
-        // {errors.phone && toast('Please enter number for phone.')}
+                <Button type="submit">Add Contact</Button>
+            </form>
+        </>
     );
 }
