@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Input } from 'UI';
-import toast from 'react-hot-toast';
-
 import { useSelector, useDispatch } from 'react-redux';
 import contactsOperations from 'redux/operations';
 import contactsSelectors from 'redux/selectors';
-import { Toaster } from 'react-hot-toast';
+
+import { Button, Input } from 'UI';
+import toast, { Toaster } from 'react-hot-toast';
 
 export function ContactForm() {
     const [contact, setContact] = useState({ name: '', phone: '' });
@@ -22,34 +21,31 @@ export function ContactForm() {
         phone: 'Номер телефона может содержать пробелы, тире, круглые скобки и может начинаться с +',
     };
 
-    const onCheckUnique = name => {
-        console.log(name);
-        if (
-            contacts.some(
-                contact => contact.name.toLowerCase() === name.toLowerCase(),
-            )
-        ) {
-            return toast.error(`"${name}" is already in contacts!`);
-        }
+    const onCheckUnique = (allContasts, newName) => {
+        const isExistContact = allContasts.some(
+            contact => contact.name.toLowerCase() === newName.toLowerCase(),
+        );
+        isExistContact && toast.error(`"${newName}" is already exist`);
+        return !isExistContact;
     };
+
     function validateForm() {
         if (contact.name || contact.phone) {
             toast.error('Some field is empty');
             return false;
         }
-        return onCheckUnique(contact.name);
+        return onCheckUnique(contacts, contact.name);
     }
     const handleSubmit = evt => {
         evt.preventDefault();
         const newContact = {
-            ...contact,
             id: Date.now(),
+            ...contact,
         };
         const isValidateForm = validateForm();
         if (!isValidateForm) return;
         dispatch(contactsOperations.addContact(newContact));
         resetForm();
-        console.log('Submit', newContact);
     };
 
     const resetForm = () => {
