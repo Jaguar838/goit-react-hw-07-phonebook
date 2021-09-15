@@ -32,6 +32,7 @@ export const Home = () => {
             </SectionWrap>
 
             <SectionWrap title="Contact List">
+                {isLoading && <LoaderUI />}
                 {isPhonebook ? (
                     <>
                         <Filter />
@@ -40,7 +41,6 @@ export const Home = () => {
                 ) : (
                     <p>Phonebook is empty</p>
                 )}
-                {isLoading && <LoaderUI />}
             </SectionWrap>
         </Layout>
     );
