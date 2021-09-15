@@ -1,16 +1,29 @@
-import React from 'react';
-
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import contactsOperations from 'redux/operations';
+import { useDispatch, useSelector } from 'react-redux';
 import contactsSelectors from 'redux/selectors';
 
-import { Layout } from 'UI/Layout';
-import { SectionWrap } from 'UI/SectionWrap';
+import { Layout, SectionWrap, LoaderUI } from 'UI';
 import { ContactForm } from 'components/ContactForm';
 import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 
+import toast from 'react-hot-toast';
+
 export const Home = () => {
     const isPhonebook = useSelector(contactsSelectors.get_isPhonebook);
+    const isLoading = useSelector(contactsSelectors.get_isLoading);
+    const error = useSelector(contactsSelectors.getError);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(contactsOperations.fetchContacts());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!error) return;
+        toast.error('Network Error');
+    }, [error]);
 
     return (
         <Layout>
@@ -19,7 +32,7 @@ export const Home = () => {
             </SectionWrap>
 
             <SectionWrap title="Contact List">
-                {!isPhonebook ? (
+                {isPhonebook ? (
                     <>
                         <Filter />
                         <ContactList />
@@ -27,6 +40,7 @@ export const Home = () => {
                 ) : (
                     <p>Phonebook is empty</p>
                 )}
+                {isLoading && <LoaderUI />}
             </SectionWrap>
         </Layout>
     );

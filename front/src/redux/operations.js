@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
     fetchContactsRequest,
     fetchContactsSuccess,
@@ -18,8 +19,8 @@ import * as API from '../API/API';
 const fetchContacts = () => async dispatch => {
     dispatch(fetchContactsRequest());
     try {
-        const { data } = await API.getContacts();
-        dispatch(fetchContactsSuccess(data));
+        const response = await API.getContacts();
+        dispatch(fetchContactsSuccess(response));
     } catch (error) {
         dispatch(fetchContactsError(error.message));
     }
@@ -30,8 +31,8 @@ const addContact = contact => async dispatch => {
 
     dispatch(addContactRequest());
     try {
-        const { data } = await API.addContact(contact);
-        dispatch(addContactSuccess(data));
+        const response = await API.addContact(contact);
+        dispatch(addContactSuccess(response));
     } catch (error) {
         dispatch(addContactError(error));
     }

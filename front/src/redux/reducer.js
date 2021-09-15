@@ -55,9 +55,11 @@ const error = createReducer(initialState.error, {
     [clearError]: () => null,
 });
 
-export default combineReducers({
+const contactsReducer = combineReducers({
     items,
     filter,
     loading,
     error,
 });
+
+export default contactsReducer;

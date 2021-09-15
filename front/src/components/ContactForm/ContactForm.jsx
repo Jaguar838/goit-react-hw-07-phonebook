@@ -21,8 +21,8 @@ export function ContactForm() {
         phone: 'Номер телефона может содержать пробелы, тире, круглые скобки и может начинаться с +',
     };
 
-    const onCheckUnique = (allContasts, newName) => {
-        const isExistContact = allContasts.some(
+    const onCheckUnique = (allContacts, newName) => {
+        const isExistContact = allContacts.some(
             contact => contact.name.toLowerCase() === newName.toLowerCase(),
         );
         isExistContact && toast.error(`"${newName}" is already exist`);
@@ -30,7 +30,7 @@ export function ContactForm() {
     };
 
     function validateForm() {
-        if (contact.name || contact.phone) {
+        if (!contact.name || !contact.phone) {
             toast.error('Some field is empty');
             return false;
         }

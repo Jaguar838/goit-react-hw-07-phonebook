@@ -2,8 +2,6 @@ import { createSelector } from '@reduxjs/toolkit';
 
 const getAllContacts = state => state.contacts.items;
 const getFilter = state => state.contacts.filter;
-const get_isLoading = state => state.contacts.loading;
-const getError = state => state.contacts.error;
 
 const getVisibleContacts = createSelector(
     [getAllContacts, getFilter],
@@ -12,8 +10,10 @@ const getVisibleContacts = createSelector(
 );
 
 const get_isPhonebook = state => state.contacts.items.length > 0;
+const get_isLoading = state => state.contacts.loading;
+const getError = state => state.contacts.error;
 
-export default {
+const contactsSelectors = {
     get_isPhonebook,
     get_isLoading,
     getAllContacts,
@@ -21,3 +21,4 @@ export default {
     getError,
     getVisibleContacts,
 };
+export default contactsSelectors;
